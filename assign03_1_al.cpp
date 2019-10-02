@@ -7,7 +7,11 @@ using namespace std;
 #define Searched 2;
 
 void show_maze(int maze[10][10], int N);
-int search_path(int maze[10][10], int N,int K,int x , int y);
+int search_path(int maze[10][10], int N,int K);
+void next_pos(int maze[10][10],int N);
+
+int x = 0; //definite starting point
+int y = 0;
 
 int main() {
 	ifstream file("input1.txt");
@@ -32,32 +36,47 @@ int main() {
 
 		file >> input;
 		int K = stoi(input); // K
-		int x = 0; //definite starting point 
-		int y = 0;
-		int num=search_path(maze, N,K,x,y);
+		int num=search_path(maze, N,K);
 		cout << num << endl;
 	}
 }
 
-int search_path(int maze[10][10], int N,int K,int x, int y) {
+int search_path(int maze[10][10], int N,int K) {
 	maze[y][x] = Searched; // Mark current position as 'Searched'
-	x, y = next_pos(maze, x, y , N);
+	next_pos(maze, N);
+	cout << "x:" << x << "y:" << y << endl;
+	show_maze(maze, N);
+	cout << "------------------------" << endl;
+
+	if (x == -1 && y == -1)
+		return -1;
+
+	int num = search_path(maze, N, K);
 
 	
 	return 1;
 }
 
-int next_pos(int maze[10][10], int x , int y, int N) {
+void next_pos(int maze[10][10],int N) {
 	// Sequace: N,E,S,W
-	if (y > 0 && maze[y - 1][x] == 0) //N
-		return x, y - 1;
-	else if (x < N && maze[y][x+1] == 0) //E
-		return x+1, y;
-	else if (y < N && maze[y+1][x] == 0) //S
-		return x , y+1;
-	else if (y < N && maze[y][x-1] == 0) //W
-		return x-1, y;
-
+	if (y > 0 && maze[y - 1][x] == 0) { //N
+		y--;
+		return;
+	}
+	else if (x < N && maze[y][x + 1] == 0) {//E
+		x++;
+		return;
+	}
+	else if (y < N && maze[y + 1][x] == 0) { //S
+		y++;
+		return;
+	}
+	else if (x < 0 && maze[y][x - 1] == 0) {//W
+		x--;
+		return;
+	}
+	else
+		return;
 }
 
 void show_maze(int maze[10][10], int N) {
