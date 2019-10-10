@@ -9,6 +9,7 @@ using namespace std;
 
 void show_arr(int* arr, int N);
 void bubble(int* arr, int N);
+void selection(int* arr, int N);
 
 int main() {
 
@@ -46,7 +47,8 @@ int main() {
 	
 	// do sort Algorithm
 
-	bubble(arr1, N1);
+	//bubble(arr1, N1);
+	selection(arr1, N1);
 
 	//examine arr1 is well sorted
 
@@ -75,4 +77,20 @@ void bubble(int* arr, int N) {
 			//show_arr(arr, N);
 		}
 			
+}
+
+void selection(int* arr, int N) {
+	for (int i = 0; i < N; i++) {
+		int min = arr[N-1];
+		int min_id = N - 1;
+		for (int j = i; j < N; j++) {
+			if (min > arr[j]) {
+				min = arr[j];
+				min_id = j;
+			}
+		}
+		int temp = arr[min_id];
+		arr[min_id] = arr[i];
+		arr[i] = temp;
+	}
 }
