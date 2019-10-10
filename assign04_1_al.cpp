@@ -11,6 +11,8 @@ void show_arr(int* arr, int N);
 void bubble(int* arr, int N);
 void selection(int* arr, int N);
 void insertion(int* arr, int N);
+void mergeSort(int* arr, int s, int N);
+void merge(int* arr, int s, int m, int e);
 
 int main() {
 
@@ -50,7 +52,8 @@ int main() {
 
 	//bubble(arr1, N1);
 	//selection(arr1, N1);
-	insertion(arr1, N1);
+	//insertion(arr1, N1);
+	mergeSort(arr1, 0, N1-1);
 
 	//examine arr1 is well sorted
 
@@ -109,5 +112,42 @@ void insertion(int* arr, int N) {
 			//show_arr(arr, N);
 		}
 	}
+}
 
+void mergeSort(int* arr,int s ,int e) {
+
+	if (s < e) {
+		int m = (s + e) / 2;
+		mergeSort(arr, s, m);
+		mergeSort(arr, m + 1, e);
+		merge(arr, s, m, e);
+		
+	}
+
+}
+
+void merge(int* arr, int s, int m, int e) {
+	int i = s, j = m + 1, k = s;
+	int* tmp = new int[e];
+
+	//show_arr(arr, m);
+	//show_arr(arr, e);
+	//cout << "i :" << i << " j :" << j << " k :" << k << endl;
+
+	while (i <= m && j <= e) {
+		if (arr[i] <= arr[j])
+			tmp[k++] = arr[i++];
+		else
+			tmp[k++] = arr[j++];
+	}
+
+	while (i <= m)
+		tmp[k++] = arr[i++];
+	while (j <= e)
+		tmp[k++] = arr[j++];
+
+	
+
+	for (int i = s; i <= e; i++)
+		arr[i] = tmp[i];
 }
