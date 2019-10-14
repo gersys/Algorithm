@@ -15,6 +15,9 @@ void mergeSort(int* arr, int s, int N);
 void merge(int* arr, int s, int m, int e);
 void quickSort(int* arr, int s, int e);
 int partition(int* arr, int s, int e);
+void max_heapify(int* a, int i, int n);
+void build_maxheap(int* a, int n);
+void HEAPSORT(int* a, int n);
 
 int main() {
 
@@ -56,7 +59,9 @@ int main() {
 	//selection(arr1, N1);
 	//insertion(arr1, N1);
 	//mergeSort(arr1, 0, N1-1);
-	quickSort(arr1, 0, N1 - 1);
+	//quickSort(arr1, 0, N1 - 1);
+	//build_maxheap(arr1, N1);
+	HEAPSORT(arr1, N1);
 
 	//examine arr1 is well sorted
 
@@ -182,4 +187,53 @@ int partition(int* arr, int s , int e) {
 	arr[i + 1] = temp;
 
 	return i + 1;
+}
+
+void max_heapify(int* a, int i, int n) {
+
+	int j, temp;
+	temp = a[i];
+	if (i == 0)
+		j = i + 1;
+	else
+		j = i * 2;
+	while (j < n)
+	{
+		if (j<n && a[j + 1]>a[j])
+			j = j + 1;
+		if (temp > a[j])
+			break;
+		else if (temp <= a[j])
+		{
+			a[j / 2] = a[j];
+			j = 2 * j;
+		}
+	}
+	a[j / 2] = temp;
+	return;
+
+}
+
+void build_maxheap(int* a, int n)
+{
+	for (int i = n / 2; i >= 0; i--)
+		max_heapify(a, i, n);
+	
+}
+
+void HEAPSORT(int* a , int n) {
+	build_maxheap(a, n);
+	//show_arr(a, n);
+	for (int i = n - 1; i >= 2;) {
+		int temp = a[i];
+		a[i] = a[0];
+		a[0] = temp;
+		//show_arr(a, n);
+		//cout << "i: " <<i<< endl;
+		i--;
+		//cout << " after i: " << i << endl;
+		max_heapify(a,0,i);
+		//show_arr(a, n);
+	}
+
 }
